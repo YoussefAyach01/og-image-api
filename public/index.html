@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OG Image API</title>
+    <meta
+      name="description"
+      content="Generate social preview images with one URL. API keys, usage metering, 1200x630 PNG."
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="wrap top">
+      <p class="mark">og<span>/</span>image</p>
+      <a class="link" href="#docs">Docs</a>
+    </header>
+    <main>
+      <section class="wrap hero">
+        <h1>A social card is one URL.</h1>
+        <p class="lede">
+          Put the title in the query string, get a 1200&times;630 PNG back. Paste it in your
+          <code>og:image</code> tag and stop screenshotting.
+        </p>
+      </section>
+
+      <section class="wrap lab" aria-labelledby="lab-h">
+        <h2 id="lab-h" class="eyebrow">Try it</h2>
+        <div class="lab-grid">
+          <form id="f" class="panel" autocomplete="off">
+            <label
+              >API key
+              <input id="key" name="key" type="password" placeholder="og_..." required />
+            </label>
+            <label
+              >Title
+              <input
+                id="title"
+                name="title"
+                value="Ship your side project in a weekend"
+                maxlength="140"
+                required
+              />
+            </label>
+            <label
+              >Subtitle
+              <input
+                id="subtitle"
+                name="subtitle"
+                value="A field guide for solo developers"
+                maxlength="200"
+              />
+            </label>
+            <label
+              >Site label
+              <input id="site" name="site" value="example.dev" maxlength="60" />
+            </label>
+            <div class="row">
+              <label
+                >Template
+                <select id="template">
+                  <option>default</option>
+                  <option>split</option>
+                  <option>minimal</option>
+                </select>
+              </label>
+              <label
+                >Theme
+                <select id="theme">
+                  <option>dark</option>
+                  <option>light</option>
+                </select>
+              </label>
+              <label
+                >Accent
+                <input id="accent" type="color" value="#6366f1" />
+              </label>
+            </div>
+            <button type="submit">Render card</button>
+            <p id="msg" role="status" class="msg">
+              Enter a key to render. Keys are issued by the operator.
+            </p>
+          </form>
+          <div class="stage">
+            <img id="out" alt="Rendered preview card appears here" width="1200" height="630" />
+          </div>
+        </div>
+        <p class="mono url" id="url" aria-live="polite"></p>
+      </section>
+
+      <section class="wrap docs" id="docs" aria-labelledby="docs-h">
+        <h2 id="docs-h" class="eyebrow">Reference</h2>
+        <pre><code>GET /v1/og?title=Hello&amp;subtitle=World&amp;theme=dark&amp;template=split&amp;accent=ff5500
+X-API-Key: og_...      (or ?key=og_... so it works inside a meta tag)</code></pre>
+        <ul class="params">
+          <li><b>title</b> required, max 140 chars</li>
+          <li><b>subtitle</b> optional, max 200</li>
+          <li><b>site</b> optional label, max 60</li>
+          <li><b>template</b> default | split | minimal</li>
+          <li><b>theme</b> dark | light</li>
+          <li><b>accent</b> 6-digit hex, no #</li>
+        </ul>
+        <p>
+          Usage: <code>GET /v1/usage</code> with your key. Plans: Free 100 cards/month, Pro 10,000,
+          Business 100,000. Over quota returns <code>429 QUOTA_EXCEEDED</code>.
+        </p>
+      </section>
+    </main>
+    <footer class="wrap foot">
+      <p>Latin text only for now (Inter). Arabic and CJK are not supported yet.</p>
+    </footer>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

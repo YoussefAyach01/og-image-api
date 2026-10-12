@@ -60,6 +60,8 @@ export function createApp({ config, db, now = () => new Date(), render = renderP
   });
 
   app.get('/health', (c) => c.json({ ok: true }));
+  // Browsers request /favicon.ico unconditionally; answer so it doesn't log a 404.
+  app.get('/favicon.ico', (c) => c.body('', 200, { 'Content-Type': 'image/x-icon' }));
   for (const [path, [file, type]] of Object.entries(files)) {
     app.get(path, (c) => c.body(asset(file), 200, { 'Content-Type': type }));
   }

@@ -28,6 +28,11 @@ describe('smoke', () => {
     expect((await app.request('/')).status).toBe(200);
     expect(await (await app.request('/health')).json()).toEqual({ ok: true });
   });
+
+  it('answers /favicon.ico so browsers do not log a 404', async () => {
+    const { app } = setup();
+    expect((await app.request('/favicon.ico')).status).toBe(200);
+  });
 });
 
 describe('admin + key storage', () => {
